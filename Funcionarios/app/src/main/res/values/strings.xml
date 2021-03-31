@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Funcionarios</string>
+    <string name="funcionario_inserted_successful">Funcionario foi inserido com sucesso</string>
+    <string name="funcionario_error_to_insert">Houve um erro ao inserir o funcionario</string>
+</resources>

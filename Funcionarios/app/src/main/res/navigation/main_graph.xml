@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/listarfuncionarios">
+
+    <fragment
+        android:id="@+id/funcionario"
+        android:name="br.unifor.cct.funcionarios.funcionarios.Funcionario"
+        android:label="funcionario_fragment"
+        tools:layout="@layout/funcionario_fragment" >
+        <argument
+            android:name="funcionaro"
+            app:argType="br.unifor.cct.funcionarios.data.bd.dao.FuncionarioEntity"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/listarfuncionarios"
+        android:name="br.unifor.cct.funcionarios.listarfuncionarios.listarfuncionarios"
+        android:label="listarfuncionarios_fragment"
+        tools:layout="@layout/listarfuncionarios_fragment" >
+        <action
+            android:id="@+id/action_listarfuncionarios_to_funcionario"
+            app:destination="@id/funcionario" />
+    </fragment>
+</navigation>
