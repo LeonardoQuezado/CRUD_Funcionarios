@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import br.unifor.cct.funcionarios.R
 import br.unifor.cct.funcionarios.data.bd.dao.appdatabase
 import br.unifor.cct.funcionarios.data.bd.dao.funcionarioDao
@@ -18,6 +20,7 @@ import br.unifor.cct.funcionarios.repository.DBDS
 import br.unifor.cct.funcionarios.repository.FuncionarioRepository
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.funcionario_fragment.*
+import kotlinx.android.synthetic.main.funcionario_item.*
 
 class Funcionario : Fragment() {
 
@@ -36,6 +39,9 @@ class Funcionario : Fragment() {
             }
         }
     }
+
+    private val args: FuncionarioArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +50,18 @@ class Funcionario : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        args.funcionario?.let{
+            button_subscriber.text = getString(R.string.funcionario_button_update)
+            input_email.setText(Funcionario.name)
+            input_email.setText(Funcionario.email)
+            input_email2.setText(Funcionario.cpf)
+            input_email3.setText(Funcionario.salario)
+            button_delete.visibility = View.VISIBLE
+
+
+
+        }
         observeEvents()
         setListeners()
     }
@@ -53,7 +71,19 @@ class Funcionario : Fragment() {
                 is FuncionarioViewModel.FuncionarioState.Inserted -> {
                     hideKeyboard()
                     requireView().requestFocus()
+                    findNavController().popBackStack()
                 }
+                is FuncionarioViewModel.FuncionarioState.Updated->{
+                    hideKeyboard()
+                    findNavController().popBackStack()
+                }
+
+                is FuncionarioViewModel.FuncionarioState.Deleted->{
+                    hideKeyboard()
+                    findNavController().popBackStack()
+                }
+
+
             }
         }
         viewModel.messageEventData.observe(viewLifecycleOwner) { stringResId ->
@@ -70,11 +100,16 @@ class Funcionario : Fragment() {
     }
     private fun setListeners() {
         button_subscriber.setOnClickListener {
-            val name = input_name.text.toString()
-            val salario = input_email.text.toString()
-            val cpf  = input_email.text.toString()
-            val email = input_email.text.toString()
+            val name = text_funcionario_name.toString()
+            val salario = text_funcionario_salario.toString()
+            val cpf  = text_funcionario_cpf.toString()
+            val email = text_funcionario_data.toString()
             viewModel.addFuncionario(name, salario,cpf,email)
         }
+
+
+button_delete.setOnClickListener(){
+viewModel.removeFuncionario(id:args.funcionario?.id?:0)
+}
     }
 }

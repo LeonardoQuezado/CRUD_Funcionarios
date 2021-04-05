@@ -24,5 +24,5 @@ interface funcionarioDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM funcionario")
-    fun getAll(): LiveData<List<FuncionarioEntity>>
+    suspend fun getAll(): List<FuncionarioEntity>
 }

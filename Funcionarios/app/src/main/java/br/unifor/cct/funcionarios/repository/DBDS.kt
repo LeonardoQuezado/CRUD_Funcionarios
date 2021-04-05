@@ -39,7 +39,7 @@ class DBDS(private val  FuncionarioDAO:funcionarioDao)
         FuncionarioDAO.deleteAll()
     }
 
-    override  fun getAllFuncionario(): LiveData<List<FuncionarioEntity>> {
+    override suspend  fun getAllFuncionario(): List<FuncionarioEntity> {
      return  FuncionarioDAO.getAll()
     }
 }

@@ -13,6 +13,7 @@ import br.unifor.cct.funcionarios.R
 import br.unifor.cct.funcionarios.data.bd.dao.FuncionarioEntity
 import br.unifor.cct.funcionarios.data.bd.dao.appdatabase
 import br.unifor.cct.funcionarios.data.bd.dao.funcionarioDao
+import br.unifor.cct.funcionarios.extensao.navigateWithAnimations
 import br.unifor.cct.funcionarios.funcionarios.FuncionarioViewModel
 import br.unifor.cct.funcionarios.repository.DBDS
 import br.unifor.cct.funcionarios.repository.FuncionarioRepository
@@ -42,9 +43,9 @@ class listarfuncionarios : Fragment(R.layout.listarfuncionarios_fragment) {
     private fun observeViewModelEvents(){
         viewModel.allfuncionariosEvent.observe(viewLifecycleOwner) {allFuncionarios->
            val funcionarioListAdapter = FuncionarioListAdapter (allFuncionarios).apply {
-               onItemClick = {
-
-                  // findNavController().navigate(directions)
+               onItemClick = {funcionario->
+               val directions = listarfuncionariosDirections.actionlistarfuncionariosToFuncionario(funcionario)
+                findNavController().navigateWithAnimations(directions)
                }
            }
 
@@ -54,17 +55,16 @@ class listarfuncionarios : Fragment(R.layout.listarfuncionarios_fragment) {
             }
         }
 
-
-
-
-
     }
-
+            fun OnResume(){
+                super.onResume()
+                viewModel.getFuncionarios()
+            }
 
     private fun  confgViewListeners(){
 
         fabAddfunc.setOnClickListener{
-            findNavController().navigate(R.id.funcionario)
+            findNavController().navigateWithAnimations(R.id.funcionario)
         }
 
     }

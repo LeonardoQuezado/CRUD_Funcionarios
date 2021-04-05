@@ -14,5 +14,5 @@ interface FuncionarioRepository {
 
     suspend fun deleteAllFuncionario()
 
-    fun getAllFuncionario(): LiveData<List<FuncionarioEntity>>
+    suspend fun getAllFuncionario(): List<FuncionarioEntity>
 }
